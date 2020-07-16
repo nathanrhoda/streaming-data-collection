@@ -1,5 +1,6 @@
 import requests
 import json
+import boto3
 
 def GenerateRandomUserData():      
     array = []
@@ -15,18 +16,17 @@ def GenerateRandomUserData():
         "Gender": json_data["results"][0]['gender'],
         "Lattitude": json_data["results"][0]['location']['coordinates']['latitude'],
         "Longitude": json_data["results"][0]['location']['coordinates']['longitude']
-    })
-    
+    })    
     array.append(user)
     return array    
     
-def WriteJsonToAFile(userArray):
-    with open('userdata.txt', 'w') as outfile:
-        json.dump(userArray, outfile)
 
+def ReadAws(array):    
+    s3 = boto3.resource('s3')
+    body = str(json.dumps(array).encode('UTF-8'))
+    s3.Bucket('nathanrhoda-machinelearning').put_object(Key='userdata.json', Body=body)
 
-if __name__ == "__main__":
+if __name__ == "__main__":        
     userArray = GenerateRandomUserData()    
-    WriteJsonToAFile(userArray)    
+    ReadAws(userArray)    
     print('Done')
-    
