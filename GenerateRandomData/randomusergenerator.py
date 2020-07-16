@@ -1,11 +1,13 @@
 import requests
 import json
 
-def GenerateRandomUserData():    
+def GenerateRandomUserData():      
+    array = []
+    
     url = 'https://randomuser.me/api/'
     response = requests.get(url)
     json_data = json.loads(response.text)
-    
+        
     user =json.dumps( {
         "First": json_data["results"][0]['name']['first'],
         "Last": json_data["results"][0]['name']['last'],
@@ -14,11 +16,17 @@ def GenerateRandomUserData():
         "Lattitude": json_data["results"][0]['location']['coordinates']['latitude'],
         "Longitude": json_data["results"][0]['location']['coordinates']['longitude']
     })
-    return user    
     
+    array.append(user)
+    return array    
+    
+def WriteJsonToAFile(userArray):
+    with open('userdata.txt', 'w') as outfile:
+        json.dump(userArray, outfile)
 
 
 if __name__ == "__main__":
-    user = GenerateRandomUserData()
-    print(user)
+    userArray = GenerateRandomUserData()    
+    WriteJsonToAFile(userArray)    
+    print('Done')
     
