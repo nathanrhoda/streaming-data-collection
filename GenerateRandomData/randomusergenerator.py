@@ -9,7 +9,8 @@ def GenerateRandomUserData():
     url = 'https://randomuser.me/api/'
     response = requests.get(url)
     json_data = json.loads(response.text)
-            
+        
+    #user =json.dumps( {
     user = {
         "First": json_data["results"][0]['name']['first'],
         "Last": json_data["results"][0]['name']['last'],
@@ -35,7 +36,7 @@ def StreamToKinesis():
         try:
             data = GenerateRandomUserData()        
             client.put_record(
-                StreamName='nathanrhoda-stream',
+                StreamName='nr-stream',
                 Data=json.dumps(data),
                 PartitionKey=partitin_key
             )
