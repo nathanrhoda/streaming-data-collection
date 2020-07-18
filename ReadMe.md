@@ -2,4 +2,4 @@
 
 
 ## Generate Random Data
-Python script to create random  data and upload it to a s3 bucket
+Python script to create random  data and upload it to a Kinesis DataStream
