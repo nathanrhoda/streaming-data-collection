@@ -28,7 +28,7 @@ def WriteToS3(array):
     s3.Bucket('nathanrhoda-machinelearning').put_object(Key='userdata.json', Body=body)
 
 def StreamToKinesis():
-    client = boto3.client('kinesis', 'us-east-2')
+    client = boto3.client('kinesis', 'us-east-1')
     partitin_key = str(uuid.uuid4())
 
     while True:
