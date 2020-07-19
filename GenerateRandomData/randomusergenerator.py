@@ -8,19 +8,9 @@ import random
 def GenerateRandomUserData():      
     url = 'https://randomuser.me/api/'
     response = requests.get(url)
-    json_data = json.loads(response.text)
-        
-    #user =json.dumps( {
-    user = {
-        "First": json_data["results"][0]['name']['first'],
-        "Last": json_data["results"][0]['name']['last'],
-        "Age": json_data["results"][0]['dob']['age'],
-        "Gender": json_data["results"][0]['gender'],
-        "Lattitude": json_data["results"][0]['location']['coordinates']['latitude'],
-        "Longitude": json_data["results"][0]['location']['coordinates']['longitude']
-    }
+    json_data = json.loads(response.text)    
     
-    return user
+    return json_data
     
 
 def WriteToS3(array):    
@@ -43,7 +33,7 @@ def StreamToKinesis():
         except Exception as e:
             print(e)
 
-        time.sleep(random.uniform(0,1))
+        #time.sleep(random.uniform(0,1))
 
 if __name__ == "__main__":            
     StreamToKinesis()    
